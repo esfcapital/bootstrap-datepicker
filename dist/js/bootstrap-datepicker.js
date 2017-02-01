@@ -1,17 +1,17 @@
 /*!
- * Datepicker for Bootstrap v1.7.0-dev (https://github.com/uxsolutions/bootstrap-datepicker)
+ * Datepicker for Bootstrap v1.7.0-RC1 (https://github.com/uxsolutions/bootstrap-datepicker)
  *
  * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 
 (function(factory){
-    if (typeof define === "function" && define.amd) {
-        define(["jquery"], factory);
-    } else if (typeof exports === 'object') {
-        factory(require('jquery'));
-    } else {
+    // if (typeof define === "function" && define.amd) {
+    //     define(["jquery"], factory);
+    // } else if (typeof exports === 'object') {
+    //     factory(require('jquery'));
+    // } else {
         factory(jQuery);
-    }
+    // }
 }(function($, undefined){
 	function UTCDate(){
 		return new Date(Date.UTC.apply(Date, arguments));
@@ -793,15 +793,11 @@
 			}
 			else if (this.dates.length){
 				// setting date by typing
-				if (typeof this.o.format === 'string') {
-					if ((String(this.element[0].value).length === String(this.o.format).length) && (String(oldDates) !== String(this.dates)))
-						this._trigger('changeDate');
-                        this.element.change();
-				    } else if (String(oldDates) !== String(this.dates)) {
-                        this._trigger('changeDate');
-                        this.element.change();
-                    }
-			}
+				if (String(oldDates) !== String(this.dates) && fromArgs) {
+					this._trigger('changeDate');
+					this.element.change();
+				}
+            }
 			if (!this.dates.length && oldDates.length) {
 				this._trigger('clearDate');
 				this.element.change();
@@ -812,19 +808,21 @@
 		},
 
 		fillDow: function(){
-			var dowCnt = this.o.weekStart,
-				html = '<tr>';
-			if (this.o.calendarWeeks){
-				html += '<th class="cw">&#160;</th>';
-			}
-			while (dowCnt < this.o.weekStart + 7){
-				html += '<th class="dow';
-        if ($.inArray(dowCnt, this.o.daysOfWeekDisabled) !== -1)
-          html += ' disabled';
-        html += '">'+dates[this.o.language].daysMin[(dowCnt++)%7]+'</th>';
-			}
-			html += '</tr>';
-			this.picker.find('.datepicker-days thead').append(html);
+      if (this.o.showWeekDays) {
+  			var dowCnt = this.o.weekStart,
+  				html = '<tr>';
+  			if (this.o.calendarWeeks){
+  				html += '<th class="cw">&#160;</th>';
+  			}
+  			while (dowCnt < this.o.weekStart + 7){
+  				html += '<th class="dow';
+          if ($.inArray(dowCnt, this.o.daysOfWeekDisabled) !== -1)
+            html += ' disabled';
+          html += '">'+dates[this.o.language].daysMin[(dowCnt++)%7]+'</th>';
+  			}
+  			html += '</tr>';
+  			this.picker.find('.datepicker-days thead').append(html);
+      }
 		},
 
 		fillMonths: function(){
@@ -1707,7 +1705,8 @@
 		templates: {
 			leftArrow: '&#x00AB;',
 			rightArrow: '&#x00BB;'
-		}
+		},
+    showWeekDays: true
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',
@@ -1998,7 +1997,7 @@
 
 	/* DATEPICKER VERSION
 	 * =================== */
-	$.fn.datepicker.version = '1.7.0-dev';
+	$.fn.datepicker.version = '1.7.0-RC1';
 
 	$.fn.datepicker.deprecated = function(msg){
 		var console = window.console;
