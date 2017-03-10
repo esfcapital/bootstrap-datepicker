@@ -1,8 +1,21 @@
-/*!
- * Datepicker for Bootstrap v1.7.0-RC1 (https://github.com/uxsolutions/bootstrap-datepicker)
+/* =========================================================
+ * bootstrap-datepicker.js
+ * Repo: https://github.com/uxsolutions/bootstrap-datepicker/
+ * Demo: https://eternicode.github.io/bootstrap-datepicker/
+ * Docs: https://bootstrap-datepicker.readthedocs.org/
+ * =========================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
- */
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ========================================================= */
 
 (function(factory){
     // if (typeof define === "function" && define.amd) {
@@ -30,7 +43,7 @@
 	function alias(method, deprecationMsg){
 		return function(){
 			if (deprecationMsg !== undefined) {
-				$.fn.datepicker.deprecated(deprecationMsg);
+				$.fn.esf_datepicker.deprecated(deprecationMsg);
 			}
 
 			return this[method].apply(this, arguments);
@@ -88,7 +101,7 @@
 	// Picker object
 
 	var Datepicker = function(element, options){
-		$.data(element, 'datepicker', this);
+		$.data(element, 'esf_datepicker', this);
 		this._process_options(options);
 
 		this.dates = new DateArray();
@@ -1497,7 +1510,7 @@
 	};
 
 	var DateRangePicker = function(element, options){
-		$.data(element, 'datepicker', this);
+		$.data(element, 'esf_datepicker', this);
 		this.element = $(element);
 		this.inputs = $.map(options.inputs, function(i){
 			return i.jquery ? i[0] : i;
@@ -1511,7 +1524,7 @@
 			.on('changeDate', $.proxy(this.dateUpdated, this));
 
 		this.pickers = $.map(this.inputs, function(i){
-			return $.data(i, 'datepicker');
+			return $.data(i, 'esf_datepicker');
 		});
 		this.updateDates();
 	};
@@ -1538,7 +1551,7 @@
 				return;
 			this.updating = true;
 
-			var dp = $.data(e.target, 'datepicker');
+			var dp = $.data(e.target, 'esf_datepicker');
 
 			if (dp === undefined) {
 				return;
@@ -1616,14 +1629,14 @@
 		return out;
 	}
 
-	var old = $.fn.datepicker;
+	var old = $.fn.esf_datepicker;
 	var datepickerPlugin = function(option){
 		var args = Array.apply(null, arguments);
 		args.shift();
 		var internal_return;
 		this.each(function(){
 			var $this = $(this),
-				data = $this.data('datepicker'),
+				data = $this.data('esf_datepicker'),
 				options = typeof option === 'object' && option;
 			if (!data){
 				var elopts = opts_from_el(this, 'date'),
@@ -1641,7 +1654,7 @@
 				else {
 					data = new Datepicker(this, opts);
 				}
-				$this.data('datepicker', data);
+				$this.data('esf_datepicker', data);
 			}
 			if (typeof option === 'string' && typeof data[option] === 'function'){
 				internal_return = data[option].apply(data, args);
@@ -1660,9 +1673,9 @@
 		else
 			return internal_return;
 	};
-	$.fn.datepicker = datepickerPlugin;
+	$.fn.esf_datepicker = datepickerPlugin;
 
-	var defaults = $.fn.datepicker.defaults = {
+	var defaults = $.fn.esf_datepicker.defaults = {
 		assumeNearbyYear: false,
 		autoclose: false,
 		beforeShowDay: $.noop,
@@ -1708,13 +1721,13 @@
 		},
     showWeekDays: true
 	};
-	var locale_opts = $.fn.datepicker.locale_opts = [
+	var locale_opts = $.fn.esf_datepicker.locale_opts = [
 		'format',
 		'rtl',
 		'weekStart'
 	];
-	$.fn.datepicker.Constructor = Datepicker;
-	var dates = $.fn.datepicker.dates = {
+	$.fn.esf_datepicker.Constructor = Datepicker;
+	var dates = $.fn.esf_datepicker.dates = {
 		en: {
 			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -1984,22 +1997,22 @@
 							'</div>'+
 						'</div>';
 
-	$.fn.datepicker.DPGlobal = DPGlobal;
+	$.fn.esf_datepicker.DPGlobal = DPGlobal;
 
 
 	/* DATEPICKER NO CONFLICT
 	* =================== */
 
-	$.fn.datepicker.noConflict = function(){
-		$.fn.datepicker = old;
+	$.fn.esf_datepicker.noConflict = function(){
+		$.fn.esf_datepicker = old;
 		return this;
 	};
 
 	/* DATEPICKER VERSION
 	 * =================== */
-	$.fn.datepicker.version = '1.7.0-RC1';
+	$.fn.esf_datepicker.version = '1.7.0-RC1';
 
-	$.fn.datepicker.deprecated = function(msg){
+	$.fn.esf_datepicker.deprecated = function(msg){
 		var console = window.console;
 		if (console && console.warn) {
 			console.warn('DEPRECATED: ' + msg);
@@ -2015,7 +2028,7 @@
 		'[data-provide="datepicker"]',
 		function(e){
 			var $this = $(this);
-			if ($this.data('datepicker'))
+			if ($this.data('esf_datepicker'))
 				return;
 			e.preventDefault();
 			// component click requires us to explicitly show it
